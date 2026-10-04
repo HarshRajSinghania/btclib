@@ -4,15 +4,10 @@
 
 """A released `## v<version>` section of CHANGELOG.md never moves again.
 
-`merge=union` resolves a rebase's append-point conflict by keeping both
-sides' added lines at the anchor they were written at (`.gitattributes`
-puts CHANGELOG.md and RELEASE_NOTES.md under that driver). A branch cut
-while a section still read "work in progress, not released yet" carries
-its own entry at that anchor; where a release retitles the heading before
-the branch rebases, the anchor is now the released heading, and the
-driver puts the entry there without a conflict, a diff, or a `range-diff`
-line showing it (issue #1512's own measurement, with
-`git merge-file --union`).
+A branch cut while a section still read "work in progress, not released
+yet" carries its own entry at the end of that section; where a release
+retitles the heading before the branch rebases, the entry can end up
+under the released heading (issue #1512).
 
 So the one thing an already-released section can still be checked
 against is not the working tree at all: it is the tag `git tag -s`
@@ -68,11 +63,12 @@ already disagreeing with their own tag (issue #1512). `v2026.8.21` and
 `v2026.8.27` had gained lines and lost none, misplaced bullets from
 `afc1ca36` and `cbedc3b7` respectively, landed after that release's own
 tag was already cut. `v2026.8.7` had both gained and lost lines: the
-union driver only ever keeps both sides' *added* lines, so it cannot
-rewrite or delete what a tag already holds, and two landed commits did,
-deliberately and in review -- `13941fd1` de-linked `[HISTORY.md](...)`
-inside that section, the file having been renamed and the link now
-404ing, and `0744d3f4` rewrote a bullet's quoted misspellings in place.
+merge driver then in use only ever kept both sides' *added* lines, so
+it could not rewrite or delete what a tag already held, and two landed
+commits did, deliberately and in review -- `13941fd1` de-linked
+`[HISTORY.md](...)` inside that section, the file having been renamed and
+the link now 404ing, and `0744d3f4` rewrote a bullet's quoted
+misspellings in place.
 The bullets `237c86d4` added under that section's own heading, with no
 deletions, shared `afc1ca36`'s and `cbedc3b7`'s *misplacement* shape
 instead.

@@ -12,12 +12,11 @@ branches open on one afternoon, and each of those numbers was a rebase
 conflict for the others. Worse, two branches moving it to the *same* new
 number merge with nothing to decide, into a number that is wrong.
 
-The one more is that this file has no `merge=union` driver to fall back
-on, and cannot have one: union keeps both sides' added lines, which is
-right for a list of bullets and nonsense for the prose around them. So
-the number goes, the lists stay -- they are the fact the number
-summarized -- and the Summary carries the `git ls-files` command that
-derives it on demand.
+The one more is that no merge driver softens the conflict: two branches
+that edit a count conflict on its line, and git has no rule that is
+right for the prose around a list. So the number goes, the lists stay --
+they are the fact the number summarized -- and the Summary carries the
+`git ls-files` command that derives it on demand.
 
 CLAUDE.md states the rule this module enforces: "Never state how many of
 anything a file holds." Its exception is "a count of what upstream published".
